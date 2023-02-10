@@ -1,6 +1,8 @@
 import _ from "underscore";
 
 import { crearDeck } from "./usecases/crear-deck";
+import { valorCarta } from "./usecases/valor-carta";
+import { pedirCarta } from "./usecases/pedir-carta";
 
 
 
@@ -37,11 +39,8 @@ const miModulo = (() => {
 
 
     // Esta funcion crea una nueva baraja de cartas y tiene que retornar baraja de cartas mezclada:
-    // ===========================================================================================
     // const crearDeck = () => {
-
-    //     deck = []; // OPTIMIZACION - reinicializamos el deck.
-
+    //     deck = []; 
     //     for(let i = 2; i <= 10; i++) { 
     //         for (let tipo of tipos){
     //             deck.push(i + tipo);
@@ -52,33 +51,27 @@ const miModulo = (() => {
     //             deck.push(esp + tipo);
     //         }
     //     } 
-    //     // deck = _.shuffle(deck); // OLD
-    //     // return deck; // OLD
-    //     return _.shuffle(deck); // OPTIMIZACION - la idea de esta funcion es crear y retornar el deck mezclado.
+    //     return _.shuffle(deck);
     // }
-    // crearDeck(); // OLD - no tiene sentido llamar esta funcion aqui, crearemos una constante y la pondremos al principio de todo el codigo.
 
 
 
 
     // Esta funcion me permite pedir una carta
-    
-    
-    
-    const pedirCarta = () => {
-        if (deck.length === 0) { 
-            throw "No hay cartas den la baraja"; 
-        }
-        return deck.pop(); 
-    }
+    // const pedirCarta = () => {
+    //     if (deck.length === 0) { 
+    //         throw "No hay cartas den la baraja"; 
+    //     }
+    //     return deck.pop(); 
+    // }
     
 
 
     // Esta funcion me permite saber valor de la carta:
-    const valorCarta = (carta) => {
-        const valor = carta.substring(0, carta.length -1);
-        return (isNaN(valor)) ? (valor === "A") ? 11 : 10 : valor * 1; 
-    }
+    // const valorCarta = (carta) => {
+    //     const valor = carta.substring(0, carta.length -1);
+    //     return (isNaN(valor)) ? (valor === "A") ? 11 : 10 : valor * 1; 
+    // }
 
 
 
@@ -121,7 +114,7 @@ const miModulo = (() => {
     const turnoComputadora = (puntosMinimos) => {
         let puntosComputadora = 0;
         do {
-            const carta = pedirCarta();
+            const carta = pedirCarta(deck); // mandamos como argumentos: deck
             puntosComputadora = acumularPuntos(carta, puntosJugadores.length -1); 
             crearCarta(carta, puntosJugadores.length -1);
         } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
@@ -138,7 +131,7 @@ const miModulo = (() => {
 
     // Boton - Pedir Carta
     btnPedir.addEventListener("click", () => {
-        const carta = pedirCarta(); 
+        const carta = pedirCarta(deck); // mandamos como argumentos: deck
         const puntosJugador = acumularPuntos(carta, 0); 
         crearCarta(carta, 0); 
         if (puntosJugador > 21) {
