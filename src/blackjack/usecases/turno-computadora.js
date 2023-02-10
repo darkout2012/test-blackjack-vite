@@ -1,5 +1,5 @@
 import { acumularPuntos } from "..";
-import { determinarGanador } from "..";
+import { determinarGanador } from "./determinar-jugador"; 
 import { pedirCarta } from "./pedir-carta";
 import { crearCarta } from "./crear-carta";
 
@@ -12,5 +12,5 @@ export const turnoComputadora = (puntosMinimos, deck, puntosJugadores, divCartas
         puntosComputadora = acumularPuntos(carta, puntosJugadores.length -1); 
         crearCarta(carta, puntosJugadores.length -1, divCartasJugadores);
     } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
-    determinarGanador();
+    determinarGanador(puntosJugadores);
 }
