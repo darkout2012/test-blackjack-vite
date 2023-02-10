@@ -3,12 +3,14 @@ import _ from "underscore";
 import { crearDeck } from "./usecases/crear-deck";
 import { valorCarta } from "./usecases/valor-carta";
 import { pedirCarta } from "./usecases/pedir-carta";
+import { turnoComputadora } from "./usecases/turno-computadora";
+import { crearCarta } from "./usecases/crear-carta";
 
 
 
 // Black Jack ver 1.0.3
 
-const miModulo = (() => { 
+// const miModulo = (() => { 
     
     let deck         = [];
     const tipos      = ["C", "D", "H", "S"],
@@ -76,16 +78,16 @@ const miModulo = (() => {
 
 
     // Esta funcion crea la carta: 
-    const crearCarta = (carta, turno) => { 
-        const imgCarta = document.createElement("img"); 
-        imgCarta.src = `assets/cartas/${carta}.png`; 
-        imgCarta.classList.add("carta"); 
-        divCartasJugadores[turno].append(imgCarta); 
-    }
+    // export const crearCarta = (carta, turno) => { 
+    //     const imgCarta = document.createElement("img"); 
+    //     imgCarta.src = `assets/cartas/${carta}.png`; 
+    //     imgCarta.classList.add("carta"); 
+    //     divCartasJugadores[turno].append(imgCarta); 
+    // }
 
 
     // Esta funcion evalua quien gana: 
-    const determinarGanador = () => { 
+    export const determinarGanador = () => { 
       const [puntosMinimos, puntosComputadora] = puntosJugadores; 
       setTimeout(() => { 
             if (puntosComputadora === puntosMinimos) { 
@@ -102,7 +104,7 @@ const miModulo = (() => {
 
 
     // Esta funcion permite acumular puntos jugadores: 
-    const acumularPuntos = (carta, turno) => { 
+    export const acumularPuntos = (carta, turno) => { 
         puntosJugadores[turno] = puntosJugadores[turno] + valorCarta(carta);  
         puntosHTML[turno].innerText = puntosJugadores[turno]; 
         return puntosJugadores[turno]; 
@@ -111,15 +113,15 @@ const miModulo = (() => {
 
 
     // Esta funcion nos permite activar turno de computadora
-    const turnoComputadora = (puntosMinimos) => {
-        let puntosComputadora = 0;
-        do {
-            const carta = pedirCarta(deck); // mandamos como argumentos: deck
-            puntosComputadora = acumularPuntos(carta, puntosJugadores.length -1); 
-            crearCarta(carta, puntosJugadores.length -1);
-        } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
-        determinarGanador();
-    }
+    // const turnoComputadora = (puntosMinimos) => {
+    //     let puntosComputadora = 0;
+    //     do {
+    //         const carta = pedirCarta(deck); // mandamos como argumentos: deck
+    //         puntosComputadora = acumularPuntos(carta, puntosJugadores.length -1); 
+    //         crearCarta(carta, puntosJugadores.length -1);
+    //     } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
+    //     determinarGanador();
+    // }
 
 
 
@@ -133,15 +135,15 @@ const miModulo = (() => {
     btnPedir.addEventListener("click", () => {
         const carta = pedirCarta(deck); // mandamos como argumentos: deck
         const puntosJugador = acumularPuntos(carta, 0); 
-        crearCarta(carta, 0); 
+        crearCarta(carta, 0, divCartasJugadores); 
         if (puntosJugador > 21) {
             btnPedir.disabled = true; 
             btnDetener.disabled = true;
-            turnoComputadora(puntosJugador);
+            turnoComputadora(puntosJugador, deck, puntosJugadores, divCartasJugadores);
         } else if (puntosJugador === 21) { 
             btnPedir.disabled = true; 
             btnDetener.disabled = true; 
-            turnoComputadora(puntosJugador);
+            turnoComputadora(puntosJugador, deck, puntosJugadores, divCartasJugadores);
         }
     })
 
@@ -150,15 +152,15 @@ const miModulo = (() => {
     btnDetener.addEventListener("click", () => {
         btnDetener.disabled = true; 
         btnPedir.disabled = true; 
-        turnoComputadora(puntosJugadores[0]); 
+        turnoComputadora(puntosJugadores[0], deck, puntosJugadores, divCartasJugadores); 
     })
 
 
-    return {
-        nuevoJuego: inicializarJuego 
-    };
+    // return {
+    //     nuevoJuego: inicializarJuego 
+    // };
 
-}) (); 
+// }) (); 
 
 
 
