@@ -22,7 +22,7 @@ const miModulo = (() => {
 
     // Esta funcion inicializa el juego: 
     const inicializarJuego = (numJugadores = 2) => { 
-        deck = crearDeck(tipos, especiales);
+        deck = crearDeck(tipos, especiales); // mandamos como argumentos: tipos, especiales
         puntosJugadores = []; 
         for (let i = 0; i < numJugadores; i++) { 
             puntosJugadores.push(0); 

@@ -6,19 +6,17 @@ import _ from "underscore";
 
 export const crearDeck = (tipos, especiales) => {
 
-    let deck = [];
+    let barraja = []; // he cambiado nombre del arreglo
 
     for(let i = 2; i <= 10; i++) { 
         for (let tipo of tipos){
-            deck.push(i + tipo);
+            barraja.push(i + tipo); // he cambiado nombre del arreglo
         }
     }
     for (let tipo of tipos) { 
         for (let esp of especiales) {
-            deck.push(esp + tipo);
+            barraja.push(esp + tipo); // he cambiado nombre del arreglo
         }
     } 
-    // deck = _.shuffle(deck); // OLD
-    // return deck; // OLD
-    return _.shuffle(deck); // OPTIMIZACION - la idea de esta funcion es crear y retornar el deck mezclado.
+    return _.shuffle(barraja); // he cambiado nombre del arreglo
 }
